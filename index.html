@@ -1,0 +1,63 @@
+Python 3.10.6 (tags/v3.10.6:9c7b4bd, Aug  1 2022, 21:53:49) [MSC v.1932 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license()" for more information.
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirección a YouTube</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .message {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        // ⚠️ ¡SOLO CAMBIA ESTE LINK! ⚠️
+        // Reemplaza la URL entre las comillas por tu link de YouTube:
+        const YOUTUBE_URL = "https://youtu.be/I8u-_EJ6ujU";
+        // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+        // Extrae el ID del video automáticamente
+        const getVideoId = (url) => {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        };
+
+        const videoId = getVideoId(YOUTUBE_URL);
+        const deepLink = `vnd.youtube://${videoId}`;
+
+        function redirect() {
+            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                window.location.href = deepLink;
+                setTimeout(() => {
+                    window.location.href = YOUTUBE_URL;
+                }, 1000);
+            } else {
+                window.location.href = YOUTUBE_URL;
+            }
+        }
+        
+        setTimeout(redirect, 1500);
+    </script>
+</head>
+<body>
+    <div class="message">
+        <h1>Redireccionando a YouTube...</h1>
+        <p>Si no eres redirigido automáticamente, <a href="#" onclick="redirect()">haz clic aquí</a>.</p>
+    </div>
+</body>
+</html>
